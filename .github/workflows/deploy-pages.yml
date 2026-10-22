@@ -32,6 +32,10 @@ jobs:
           php artisan key:generate --force --ansi
 
       - name: Render home page to static HTML
+        env:
+          SESSION_DRIVER: array
+          CACHE_STORE: array
+          QUEUE_CONNECTION: sync
         run: |
           mkdir -p site
           php -r "require 'vendor/autoload.php'; \$app = require 'bootstrap/app.php'; \$kernel = \$app->make(Illuminate\Contracts\Http\Kernel::class); \$response = \$kernel->handle(Illuminate\Http\Request::create('/', 'GET')); echo \$response->getContent();" > site/index.html
