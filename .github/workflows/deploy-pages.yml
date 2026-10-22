@@ -1,0 +1,50 @@
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, xml, ctype, json, bcmath, pdo_sqlite, fileinfo
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force --ansi
+
+      - name: Render home page to static HTML
+        run: |
+          mkdir -p site
+          php -r "require 'vendor/autoload.php'; \$app = require 'bootstrap/app.php'; \$kernel = \$app->make(Illuminate\Contracts\Http\Kernel::class); \$response = \$kernel->handle(Illuminate\Http\Request::create('/', 'GET')); echo \$response->getContent();" > site/index.html
+          test -s site/index.html
+          grep -q "Zulhusni Adam" site/index.html
+
+      - name: Publish to husniadamz.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          external_repository: husniadamz/husniadamz.github.io
+          publish_branch: main
+          publish_dir: ./site
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "Deploy portfolio from ${{ github.sha }}"
