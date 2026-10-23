@@ -31,7 +31,7 @@ jobs:
           cp .env.example .env
           php artisan key:generate --force --ansi
 
-           - name: Render pages to static HTML
+      - name: Render pages to static HTML
         env:
           APP_URL: https://husniadamz.github.io
           SESSION_DRIVER: array
