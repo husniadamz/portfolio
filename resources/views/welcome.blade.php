@@ -18,7 +18,7 @@
 
             <div class="hero-actions reveal d3">
                 <a href="{{ route('contact') }}" class="btn btn-primary">Let's work together &rarr;</a>
-                <a href="{{ route('about') }}" class="btn btn-ghost">About me</a>
+                <a href="#about" class="btn btn-ghost">About me</a>
             </div>
         </div>
 
@@ -35,4 +35,10 @@
             </div>
         </div>
     </div>
+
+    @include('partials.projects')
+    @include('partials.about')
+    @include('partials.focus')
+    @include('partials.stack')
+    @include('partials.contact')
 @endsection
