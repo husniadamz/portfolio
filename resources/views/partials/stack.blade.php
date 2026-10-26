@@ -7,11 +7,12 @@
             <span class="tag">PHP</span>
             <span class="tag">Laravel</span>
             <span class="tag">JavaScript</span>
-            <span class="tag">Tailwind CSS</span>
-            <span class="tag">Vite</span>
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">C#</span>
+            <span class="tag">.NET</span>
             <span class="tag">MySQL</span>
             <span class="tag">Git</span>
-            <span class="tag">REST APIs</span>
         </div>
     </div>
 </section>

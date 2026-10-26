@@ -40,5 +40,6 @@
     @include('partials.about')
     @include('partials.focus')
     @include('partials.stack')
+    @include('partials.experience')
     @include('partials.contact')
 @endsection
