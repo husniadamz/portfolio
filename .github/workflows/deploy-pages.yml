@@ -45,9 +45,10 @@ jobs:
 
           $app = require 'bootstrap/app.php';
           $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+          $kernel->bootstrap();
 
           foreach (['/', '/about', '/focus', '/stack', '/contact'] as $path) {
-              $response = $kernel->handle(Illuminate\Http\Request::create($path, 'GET'));
+              $response = $kernel->handle(Illuminate\Http\Request::create(rtrim(config('app.url'), '/').$path, 'GET'));
 
               if ($response->getStatusCode() !== 200 || ! str_contains($response->getContent(), 'Zulhusni Adam')) {
                   fwrite(STDERR, "Failed to render {$path}\n");
